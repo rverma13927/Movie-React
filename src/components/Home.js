@@ -1,44 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import API from '../API';
-
+import React from 'react';
+import { useHomeFetch } from '../Hooks/useHomeFetch';
 
  
   
 
 const Home=()=>{
      
-    const [state,setState] = useState();
-    const [loading,setLoading] = useState(false);
-    const [error,setError] = useState(false);
- 
+    const {state,loading, error}=   useHomeFetch();
 
-    const fetchMovies =async(page,seachTerm="")=>{
-       try{
-        setError(false);
-        setLoading(true);
-        const movies = await API.fetchMovies(seachTerm,page);
-
-         console.log(movies);
-
-         //return an object therefore we have to add paranthesis 
-         // never mutate the state in react use setState function
-         setState(prev=>({
-             ...movies,
-            results: 
-              page>1 ? [...prev,...movies.results] : [...movies.results]
-         }));
-       }catch(error){
-          setError(true);
-       }
-       setLoading(false);
-       console.log(state)
-    }
-
-    //initial render only once since []
-    useEffect(()=>{
-        fetchMovies(1,"");
-    },[])
-    
+    console.log(state)
     return <div>Home Page</div>
 }
 
